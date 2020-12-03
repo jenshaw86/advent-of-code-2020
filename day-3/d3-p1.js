@@ -1,3 +1,7 @@
+const inputLength = 323;
+const slope = [3,1];
+let input = [];
+
 const readline = require('readline');
 var rl = readline.createInterface({
   input: process.stdin,
@@ -9,28 +13,25 @@ let input = [];
 rl.on('line', function(line){
     input.push(line);
 
-    if(input.length === 323) {
+    if(input.length === inputLength) {
         rl.close();
     }
 })
 
-const slope = [3,1];
 
 rl.on('close', function() {
     treeCollisions(input);
 });
 
 const treeCollisions = input => {
-    let treeCount = 0;
     const [r,d] = [...slope];
+    let treeCount = 0;
     let j = r; 
 
     for (let i = d; i < input.length; i += d) {
         j = j >= input[i].length ? j % input[i].length : j;
 
-        if (input[i][j] === "#") {
-            treeCount++;
-        }
+        if (input[i][j] === "#") treeCount++;
 
         j += r;
     }
