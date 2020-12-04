@@ -8,8 +8,6 @@ var rl = readline.createInterface({
   output: process.stdout,
 });
 
-let input = [];
-
 rl.on('line', function(line){
     input.push(line);
 
