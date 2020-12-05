@@ -41,11 +41,9 @@ const processPassports = passports => {
         valid = true;
         for (const field of validFields) {
             const fieldValue = passports[passport][field]
-            if (!fieldValue) {
-                valid = false;
-            } else {
-                validate(field, fieldValue);
-            }
+
+            valid = !fieldValue ? false : validate(field, fieldValue)
+            
             if (!valid) break;
         }
         if (valid) validPassports++;
@@ -56,81 +54,77 @@ const processPassports = passports => {
     function validate (field, value) {
         switch(field) {
             case 'byr':
-                valid = validateBYR(value);
-                break;
+                return validateBYR(value);
             case 'iyr':
-                valid = validateIYR(value);
-                break;
+                return validateIYR(value);
             case 'eyr':
-                valid = validateEYR(value);
-                break;
+                return validateEYR(value);
             case 'hgt':
-                valid = validateHGT(value);
-                break;
+                return validateHGT(value);
             case 'hcl':
-                valid = validateHCL(value);
-                break;
+                return validateHCL(value);
             case 'ecl':
-                valid = validateECL(value);
-                break;
+                return validateECL(value);
             case 'pid':
-                valid = validatePID(value);
-                break;
+                return validatePID(value);
             default:
                 break;
         }
     }
+}
 
-    function validateBYR (value) {
-        const range = [1920, 2002];
+const validateBYR = value => {
+    const range = [1920, 2002];
 
-        if (!yearLength(value)) return false;
-        return isWithinRange(value, range);
+    if (!yearLength(value)) return false;
+    return isWithinRange(value, range);
+}
+
+const validateIYR = value => {
+    const range = [2010, 2020];
+
+    if (!yearLength(value)) return false;
+    return isWithinRange(value, range);
+}
+
+const validateEYR = value => {
+    const range = [2020, 2030];
+
+    if (!yearLength(value)) return false;
+    return isWithinRange(value, range);
+}
+
+const validateHGT = value => {
+    const ranges = {
+        cm: [150, 193],
+        in: [59, 76]
     }
+    const regex = /^\d*cm|in$/;
+    const measure = /cm|in/;
 
-    function validateIYR (value) {
-        const range = [2010, 2020];
+    return regex.test(value) ? isWithinRange(value, ranges[value.match(measure)[0]]) : false;
+}
 
-        if (!yearLength(value)) return false;
-        return isWithinRange(value, range);
-    }
+const validateHCL = value => {
+    const regex = /^#[0-9a-f]{6}$/
+    return regex.test(value.toLowerCase());
+}
 
-    function validateEYR (value) {
-        const range = [2020, 2030];
+const validateECL = value => {
+    const validColors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
+    return validColors.indexOf(value) > -1;
+}
 
-        if (!yearLength(value)) return false;
-        return isWithinRange(value, range);
-    }
+const validatePID = value => {
+    const regex = /^\d{9}$/
+    return regex.test(value)
+}
 
-    function validateHGT (value) {
-        const ranges = {
-            cm: [150, 193],
-            in: [59, 76]
-        }
-        const regex = /^\d*cm|in$/;
-        const measure = /cm|in/;
+const yearLength = value => {
+    return value.length === 4;
+}
 
-        return regex.test(value) ? isWithinRange(value, ranges[value.match(measure)[0]]) : false;
-    }
-    function validateHCL (value) {
-        const regex = /^#[0-9a-f]{6}$/
-        return regex.test(value.toLowerCase());
-    }
-    function validateECL (value) {
-        const validColors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
-        return validColors.indexOf(value) > -1;
-    }
-    function validatePID (value) {
-        const regex = /^\d{9}$/
-        return regex.test(value)
-    }
-
-    function yearLength (value) {
-        return value.length === 4;
-    }
-
-    function isWithinRange (value, range) {
-        const [start, end] = [...range];
-        return start <= parseInt(value) && parseInt(value) <= end;
-    }
+const isWithinRange = (value, range) => {
+    const [start, end] = [...range];
+    return start <= parseInt(value) && parseInt(value) <= end;
 }
