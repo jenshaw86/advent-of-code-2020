@@ -5,8 +5,6 @@ var rl = readline.createInterface({
 });
 
 const inputLength = 965;
-const rows = 127;
-const cols = 7;
 const input = [];
 
 rl.on('line', function(line){
@@ -19,56 +17,48 @@ rl.on('line', function(line){
 
 
 rl.on('close', function() {
-    highestSeatId(input);
+    console.log(highestSeatId(input));
 });
+
+const rows = 127;
+const cols = 7;
 
 const highestSeatId = input => {
     let max = 0;
     
     input.forEach( boardingPass => {
-        // get row
-        let row = getRow(boardingPass);
-        let col = getCol(boardingPass);
-        let seatId = row * 8 + col;
+        const rowCode = boardingPass.slice(0, 7);
+        const colCode = boardingPass.slice(7);
+
+        const row = getPosition(rows, rowCode);
+        const col = getPosition(cols, colCode);
+
+        const seatId = row * 8 + col;
         max = seatId > max ? seatId : max;
     });
     
-    console.log(max);
+    return max;
 }
 
-const getRow = boardingPass => {
-    let mid;
+const getPosition = (num, code) => {
+    let mid = 0;
     let p1 = 0;
-    let p2 = rows;
-    for (let i = 0; i < 7; i++) {
-        switch (boardingPass[i]) {
+    let p2 = num;
+    for (let i = 0; i < code.length; i++) {
+        switch (code[i]) {
             case "F":
-                mid = Math.floor((p1 + p2) / 2);
-                p2 = mid;
-                break;
-            case "B":
-                mid = Math.ceil((p1 + p2) / 2);
-                p1 = mid;
-                break;
-        }
-    }
-    return mid;
-}
-const getCol = boardingPass => {
-    let mid;
-    let p1 = 0;
-    let p2 = cols;
-    for (let i = 7; i < boardingPass.length; i++) {
-        switch (boardingPass[i]) {
             case "L":
                 mid = Math.floor((p1 + p2) / 2);
                 p2 = mid;
                 break;
+            case "B":
             case "R":
                 mid = Math.ceil((p1 + p2) / 2);
                 p1 = mid;
                 break;
+            default:
+                break;
         }
     }
     return mid;
-}
+} 
