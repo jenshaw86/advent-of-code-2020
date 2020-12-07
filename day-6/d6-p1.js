@@ -4,7 +4,7 @@ var rl = readline.createInterface({
   output: process.stdout,
 });
 
-const inputLength = 15;
+const inputLength = 2233;
 let lineNumber = 1;
 let group = 1;
 const list = {};
