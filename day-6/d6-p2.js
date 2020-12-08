@@ -11,10 +11,6 @@ const list = {};
 list[group] = {answers: {}, passengerCount: 0};
 
 rl.on('line', function(line){
-    // track number of people in the group
-    // track which keys were answered 'yes' and how many times
-    // if a key has a value equal to number in the group, add to count
-    
     if (line) {
         list[group].passengerCount++;
         for (let i = 0; i < line.length; i++) {
