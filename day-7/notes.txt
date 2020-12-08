@@ -1,0 +1,79 @@
+light red contain 1 bright white, 2 muted yellow.
+dark orange contain 3 bright white, 4 muted yellow.
+bright white contain 1 shiny gold.
+muted yellow contain 2 shiny gold, 9 faded blue.
+shiny gold contain 1 dark olive, 2 vibrant plum.
+dark olive contain 3 faded blue, 4 dotted black.
+vibrant plum contain 5 faded blue, 6 dotted black.
+faded blue contain no other.
+dotted black contain no other.
+
+OUTER BAGS AND THE BAG-TYPES AND QTYS THEY CAN CONTAIN
+{
+    light-red: {
+        bright-white: 1,
+        muted-yellow: 1
+    },
+    dark-orange: {
+        bright-white: 3, 
+        muted-yellow: 4
+    },
+    bright-white: {
+        shiny-gold: 1
+    },
+    muted-yellow: {
+        shiny-gold: 2,
+        faded-blue: 9
+    }
+}
+
+BAGS TYPES, THEIR CONTAINERS AND HOW MANY OF THEMSELVES CAN FIT
+{
+    bright-white: {
+        light-red: 1,
+        dark-orange: 3
+    },
+    muted-yellow: {
+        light-red: 1,
+        dark-orange: 4,
+    },
+    shiny-gold: {
+        bright-white: 1,
+        muted-yellow: 2
+    },
+    faded-blue: {
+        muted-yellow: 9
+        dark-olive: 3
+        vibrant-plum: 5
+    },
+    dark-olive: {
+        shiny-gold: 1
+    },
+    vibrant-plum: {
+        shiny-gold: 2
+    }, 
+    dotted-black: {
+        dark-olive: 4,
+        vibrant-plum: 6
+    }
+
+}
+
+variable container
+find shiny-gold in hash
+iterate through keys
+for each key, check variable container
+if doesn't exist, add to container
+if already exists, skip
+shiny-gold = {
+    bright-white: true,
+    light-red: true, 
+    dark-orange: true,
+    muted-yellow: true;
+}
+
+counter = 4;
+
+then check that key in the hash
+
+this might require recursion until key cannot be found
