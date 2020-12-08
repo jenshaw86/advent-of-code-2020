@@ -24,8 +24,23 @@ OUTER BAGS AND THE BAG-TYPES AND QTYS THEY CAN CONTAIN
     muted-yellow: {
         shiny-gold: 2,
         faded-blue: 9
+    },
+    shiny-gold: {
+        dark-olive: 1,
+        vibrant-plum: 2
+    },
+    dark-olive: {
+        faded-blue: 3, 
+        dotted-black: 4
+    },
+    vibrant-plum: {
+        faded-blue: 5, 
+        dotted-black: 6
     }
 }
+
+container = "light red "
+types = "1 bright white , 2 muted yellow ."
 
 BAGS TYPES, THEIR CONTAINERS AND HOW MANY OF THEMSELVES CAN FIT
 {
